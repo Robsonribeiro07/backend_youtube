@@ -4,8 +4,14 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const webSocket = require('ws')
 
+require('dotenv').config({path: '.env.local'})
+
+
+const secretAPy = process.env.PORT_MONGODB
+console.log('Secret:', secretAPy)
 // Criando a aplicação Express
 const app = express();
+
 
 
 
@@ -23,15 +29,19 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Conectando ao MongoDB
-mongoose.connect('mongodb://localhost:27017/Projeto2')
-  .then(() => console.log('Conectado ao MongoDB!'))
-  .catch(err => console.error('Erro ao conectar:', err));
-
+mongoose.connect(`${secretAPy}/Projeto2`, {
+})
+.then(() => {
+    console.log('Conectado ao MongoDB com sucesso!');
+})
+.catch((error) => {
+    console.error('Erro ao conectar ao MongoDB:', error);
+});
   const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     imgUrlProfile: { type: String },
-    imgBannerProfile: { type: String },
+    imgBannerProfile: { type: String }, 
     inscritos: { type: Number, default: 0 },
     UserInscritos: {type: Array},
     UserCanaisInscritos: {type: Array},
