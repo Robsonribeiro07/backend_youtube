@@ -30,6 +30,7 @@ app.use(express.json());
 
 // Conectando ao MongoDB
 mongoose.connect(`${secretAPy}/Projeto2`, {
+    connectTimeoutMS: 60000 
 })
 .then(() => {
     console.log('Conectado ao MongoDB com sucesso!');
